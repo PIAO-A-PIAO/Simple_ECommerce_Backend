@@ -33,7 +33,7 @@ public class UserInterface {
             }else if(command.equals("edit")){
                 System.out.println("Product ID:");
                 String id = scan.next();
-                System.out.println("Column to Edit:");
+                System.out.println("Column to Edit (product_id or product_name):");
                 String col = scan.next();
                 System.out.println("New Content:");
                 String content = scan.next();
