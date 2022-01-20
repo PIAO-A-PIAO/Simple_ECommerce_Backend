@@ -6,18 +6,24 @@ import java.util.ArrayList;
 
 public class CargoManager {
 
+    static String URL;
+    static String USER;
+    static String PASS;
+
+    public static void set(String url, String user, String pass){
+        URL = url;
+        USER = user;
+        PASS = pass;
+    }
+
     /**
      * This method connects the program to the database
      * @return the connection conn
      * @throws SQLException
      */
     public static Connection connect() throws SQLException{
-        String DB_URL = "jdbc:mysql://localhost/";
-        String USER = "root";
-        String PASS = "sql_PXY0320"; //Please replace the values with your own database URL, username, and password
-
         try{
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
             return conn;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -190,8 +196,10 @@ public class CargoManager {
     }
 
     public static void main (String[]args) throws Exception {
-        exportCSV("table1");
-        /*createTable();
+        set("jdbc:mysql://localhost/", "root", "sql_PXY0320");
+        connect();
+        /*exportCSV("table1");
+        createTable();
         insert("A1023", "Apple");
         insert("A1054", "Baaaaa");
         edit("A1054", "product_name", "Banana");
