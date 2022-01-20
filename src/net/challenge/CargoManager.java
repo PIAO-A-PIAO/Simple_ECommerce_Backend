@@ -6,10 +6,15 @@ import java.util.ArrayList;
 
 public class CargoManager {
 
+    /**
+     * This method connects the program to the database
+     * @return the connection conn
+     * @throws SQLException
+     */
     public static Connection connect() throws SQLException{
         String DB_URL = "jdbc:mysql://localhost/";
         String USER = "root";
-        String PASS = "sql_PXY0320"; //Please replace the
+        String PASS = "sql_PXY0320"; //Please replace the values with your own database URL, username, and password
 
         try{
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -20,6 +25,10 @@ public class CargoManager {
         return null;
     }
 
+    /**
+     * This method creates a new database "Cargos" and two tables "table1" and "deleted"
+     * @throws SQLException
+     */
     public static void createTable() throws SQLException {
         try{
             Connection conn = connect();
@@ -41,6 +50,11 @@ public class CargoManager {
         }
     }
 
+    /**
+     * This method is used to add new rows to the table
+     * @param product_id id of the product, not id of the row
+     * @param product_name name of the product
+     */
     public static void insert(String product_id, String product_name){
         try{
             Connection conn = connect();
@@ -56,6 +70,12 @@ public class CargoManager {
         }
     }
 
+    /**
+     * This method edit one term in a row
+     * @param product_id id of the product, used to identify the row
+     * @param column which column to edit
+     * @param newContent new content update
+     */
     public static void edit(String product_id, String column, String newContent){
         try{
             Connection conn = connect();
@@ -71,6 +91,10 @@ public class CargoManager {
         }
     }
 
+    /**
+     * This method deletes a row (move it from "table1" to "deleted")
+     * @param product_id used to identify which row to delete
+     */
     public static void delete(String product_id) {
         try{
             Connection conn = connect();
@@ -90,6 +114,11 @@ public class CargoManager {
             System.out.println("Item deleted");
         }
     }
+
+    /**
+     * This method undeletes a row (move it from "deleted" back into "table1")
+     * @param product_id
+     */
     public static void undelete(String product_id) {
         try{
             Connection conn = connect();
@@ -110,6 +139,11 @@ public class CargoManager {
         }
     }
 
+    /**
+     * This method read the table and sort it into a list of string
+     * @param tableName determines which table to read
+     * @return
+     */
     public static ArrayList<String> getList(String tableName){
         try{
             Connection conn = connect();
@@ -128,6 +162,10 @@ public class CargoManager {
         return null;
     }
 
+    /**
+     * This method prints the list of a table to the console
+     * @param tableName determines which table to print
+     */
     public static void print(String tableName){
         ArrayList<String> result = getList(tableName);
         for (String row: result){
@@ -135,6 +173,11 @@ public class CargoManager {
         }
     }
 
+    /**
+     * This method exports a csv file based on data from a table
+     * @param tableName determines which table to export
+     * @throws IOException
+     */
     public static void exportCSV(String tableName) throws IOException {
         FileWriter writer = new FileWriter("./" + tableName + ".csv");
         writer.write("id, product_id, product_name\n");
